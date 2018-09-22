@@ -18,7 +18,7 @@ void dfs(vector<int> *adj, int n,int v){
     memset(visited, false, sizeof(bool)*(n+1)); // fill과 비교해보기
     visited[v] = true;
 
-    while(!s.empty()){
+    while(1){
         int flag = 0;
         for(int i=0; i<adj[v].size(); i++){
             if(!visited[adj[v][i]]){ // 0. 즉, 가본적없는 노드라면,
@@ -29,10 +29,12 @@ void dfs(vector<int> *adj, int n,int v){
                 flag = 1;
                 break;
             }
+            if(i == adj[v].size()-1) s.pop();
         }
-        if((flag != 1) && !s.empty()){
+        if(s.empty()) break;
+        else if((flag != 1) && !s.empty()){
             v = s.top();
-            s.pop();
+            //s.pop();
         }
     }
 }
