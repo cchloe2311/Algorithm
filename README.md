@@ -1,1 +1,1 @@
-# beakjoon_algorithm
+# algorithm
