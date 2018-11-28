@@ -25,34 +25,13 @@ void preorder(vector<Node> v){
     int *isBeen = new int[v.size()];
     memset(isBeen, 0, sizeof(int)*v.size());
 
-    int *isConsidered = new int[v.size()];
-    memset(isConsidered, 0, sizeof(int)*v.size());
-
     s.push(v[0]);
-
-//    while(!s.empty()){
-//        if(s.top().isBeen == 0){
-//            result.push_back(s.top().id);
-//            s.top().isBeen = 1;
-//        }
-//        if(s.top().isChildBeen[0] != -1){
-//            s.top().isChildBeen[0] = -1;
-//            s.push(v[s.top().leftChild]);
-//            continue;
-//        }
-//        else if(s.top().isChildBeen[1] != -1){
-//            s.top().isChildBeen[1] = -1;
-//            s.push(v[s.top().rightChild]);
-//            continue;
-//        }
-//
-//        s.pop();
-//    }
+    isBeen[s.top().id] = 1;
 
     while(!s.empty()){
-        if(isConsidered[s.top().id] == 0){
+        if(isBeen[s.top().id] == 1){
             result.push_back(s.top().id);
-            isConsidered[s.top().id] = 1;
+            isBeen[s.top().id] = 2;
         }
         if(s.top().leftChild != -1 && isBeen[s.top().leftChild] == 0){
             isBeen[s.top().leftChild] = 1;
