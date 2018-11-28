@@ -48,6 +48,39 @@ void preorder(vector<Node> v){
     }
 
     for(int i=0; i<result.size(); i++) cout << result[i] << " ";
+    cout << endl;
+}
+
+void inorder(vector<Node> v){
+    stack<Node> s;
+    vector<int> result;
+    int *isBeen = new int[v.size()];
+    memset(isBeen, 0, sizeof(int)*v.size());
+
+    s.push(v[0]);
+    isBeen[s.top().id] = 1;
+
+    while(!s.empty()){
+        if((s.top().leftChild == -1 || isBeen[s.top().leftChild] == 2) && isBeen[s.top().id] != 2){
+            result.push_back(s.top().id);
+            isBeen[s.top().id] = 2;
+        }
+        else if(isBeen[s.top().leftChild] == 0){
+            isBeen[s.top().leftChild] = 1;
+            s.push(v[s.top().leftChild]);
+            continue;
+        }
+
+        if(s.top().rightChild != -1 && isBeen[s.top().rightChild] == 0){
+            isBeen[s.top().rightChild] = 1;
+            s.push(v[s.top().rightChild]);
+        }else{
+            s.pop();
+        }
+    }
+
+    for(int i=0; i<result.size(); i++) cout << result[i] << " ";
+    cout << endl;
 }
 
 int main(){
@@ -63,4 +96,5 @@ int main(){
     }
 
     preorder(v);
+    inorder(v);
 }
