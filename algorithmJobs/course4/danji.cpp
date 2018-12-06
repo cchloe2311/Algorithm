@@ -56,7 +56,7 @@
 //
 //    int numOfDanji = 0;
 //    int curPointY = 0, curPointX = 0;
-//    while(curPointY != (n-1) || curPointX != (n-1)){
+//    while(!(curPointY == n && curPointX == 0)){
 //        if(map[curPointY][curPointX] == 1 && visited[curPointY][curPointX] == 0){
 //            numOfDanji++;
 //            defineDanji(map, visited, curPointY, curPointX, numOfDanji, n);
