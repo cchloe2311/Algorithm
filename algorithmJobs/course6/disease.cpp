@@ -21,7 +21,7 @@ int main(){
             q.push(village*2);
             isVisited[village*2] = 1;
         }
-        if(village%3 == 0 && isVisited[village/3] == 0){
+        if(isVisited[village/3] == 0){
             q.push(village/3);
             isVisited[village/3] = 1;
         }
