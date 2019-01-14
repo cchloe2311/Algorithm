@@ -4,13 +4,13 @@
 
 using namespace std;
 
-int getSmallerNum(string arr[2]){
-    for(int i=arr[0].size(); i>=0; i++){
+int getSmallerNum(string a, string b){
+    for(int i=0; i<a.size(); i++){
         // 가장 높은 자리수부터 돌면서 큰 수를 찾음
-        if(arr[0][i] < arr[1][i]) return 1;
-        else if(arr[0][i] > arr[1][i]) return 0;
+        if(a[i] < b[i]) return 0;
+        else if(a[i] > b[i]) return 1;
     }
-    return 0;
+    return 1;
 }
 
 int main(){
@@ -20,11 +20,13 @@ int main(){
     string arr[2];
     cin >> arr[0] >> arr[1];
 
+    if(arr[0] == arr[1]) cout << 0;
+
     if(arr[0].size() < arr[1].size()) shorter = 0;
-    else if(arr[0].size() == arr[1].size()) shorter = getSmallerNum(arr);
+    else if(arr[0].size() == arr[1].size()) shorter = getSmallerNum(arr[0], arr[1]);
     else shorter = 1;
 
-    //arr[1-shorter] = "0"+arr[1-shorter];
+    arr[1-shorter] = "0"+arr[1-shorter];
     int orgLength = arr[shorter].size();
     for(int i=0; i< arr[1-shorter].size()-orgLength; i++){
         arr[shorter] = "0"+arr[shorter];
@@ -40,7 +42,12 @@ int main(){
         arr[1-shorter][i] = sub+'0';
     }
 
-    // arr[0] < arr[1] 인 경우, -1 곱해주기
     if(shorter == 0) cout << "-";
-    for(int i=0; i<arr[1-shorter].size(); i++) cout << arr[1-shorter][i];
+    int check = 0;
+    for(int i=0; i<arr[1-shorter].size(); i++)
+        if(arr[1-shorter][i] != (char)'0' || check == 1){
+            check = 1;
+            cout << arr[1-shorter][i];
+        }
+
 }
