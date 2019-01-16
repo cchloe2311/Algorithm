@@ -3,12 +3,12 @@
 using namespace std;
 
 int main(){
-    int a;
-    scanf("%d", &a);
+    long long a;
+    cin >> a;
 
-    int low = sqrt(a);
-    int high = sqrt(a+1);
-    int mid;
+    long long low = sqrt(a);
+    long long high = sqrt(a+1);
+    long long mid;
 
     while(1){
         mid = (low+high)/2;
