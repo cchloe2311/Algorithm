@@ -4,15 +4,15 @@
 #include <algorithm>
 using namespace std;
 
-int getSum(int *sub, int n){
-    int sum = 0;
-    for(int i=0; i<n; i++) sum+=sub[i];
+long long getSum(long long *sub, long long n){
+    long long sum = 0;
+    for(long long i=0; i<n; i++) sum+=sub[i];
     return sum;
 }
 
-void setSub(int *tree, int *sub, int mid, int n){
+void setSub(long long *tree, long long *sub, long long mid, long long n){
     for(int i=0; i<n; i++) {
-        int tempSum = tree[i] - mid;
+        long long tempSum = tree[i] - mid;
         if(tempSum > 0) sub[i] = tree[i] - mid;
         else sub[i] = 0;
     }
@@ -22,18 +22,14 @@ int main(){
     int n, m;
     cin >> n >> m;
 
-    int *tree =  new int[n];
-    int *sub = new int[n];
-    //memset(sub, 0, sizeof(int)*n);
-
-//    int tree[4];
-//    int sub[4];
+    long long *tree =  new long long[n];
+    long long *sub = new long long[n];
 
     for(int i=0; i<n; i++) cin >> tree[i];
 
-    int low = 0;
-    int high = *max_element(tree, tree+n);
-    int mid;
+    long long low = 0;
+    long long high = *max_element(tree, tree+n)-1;
+    long long mid;
 
     while(1){
         mid = (low+high)/2;
