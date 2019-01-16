@@ -1,30 +1,17 @@
 #include <iostream>
-#include <list>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
-void findPosition(list<int> &l, int input){
-    list<int>::iterator iter;
-    int check =0;
-    for(iter= l.begin(); iter != l.end(); ++iter){
-        if(*iter >= input){
-            l.insert(iter, input);
-            check = 1;
-            break;
-        }
-    }
-
-    if(check == 0) l.push_back(input);
-}
-
-bool isInList( int *box, int input, int size){
+bool isInList(int *input, int temp, int size){
     int low = 0, high = size-1;
     int mid;
 
     while(low <= high){
         mid = (low + high) / 2;
 
-        if(box[mid] == input) return true;
-        else if(box[mid] > input) high = mid-1;
+        if(input[mid] == temp) return true;
+        else if(input[mid] > temp) high = mid-1;
         else low = mid+1;
     }
 
@@ -33,20 +20,13 @@ bool isInList( int *box, int input, int size){
 
 int main(){
     int n, m;
-    list<int> l;
 
     cin >> n;
-    int *box = new int[n];
-    for(int i=0; i<n; i++){
-        int temp;
-        cin >> temp;
 
-        if(l.empty()) l.push_back(temp);
-        else findPosition(l, temp);
-    }
+    int *input = new int[n];
+    for(int i=0; i<n; i++) cin >> input[i];
 
-    int index = 0;
-    for(list<int>::iterator iter = l.begin(); iter != l.end(); ++iter, index++) box[index] = *iter;
+    sort(input, input+n);
 
     cin >> m;
     int *question = new int[m];
@@ -54,7 +34,7 @@ int main(){
         int temp;
         cin >> temp;
 
-        if(isInList(box, temp, n)) cout << 1 << endl;
+        if(isInList(input, temp, n)) cout << 1 << endl;
         else cout << 0 << endl;
     }
 }
