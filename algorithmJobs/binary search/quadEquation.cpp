@@ -1,24 +1,17 @@
 #include <iostream>
+#include <math.h>
 using namespace std;
-
-int getRange(int a){
-    int range = 2;
-
-    while(range*(range+1) < a)
-        range *= 2;
-
-    return range;
-}
 
 int main(){
     int a;
     scanf("%d", &a);
 
-    int low = 1;
-    int high = getRange(a);
+    int low = sqrt(a);
+    int high = sqrt(a+1);
+    int mid;
 
     while(1){
-        int mid = (low+high)/2;
+        mid = (low+high)/2;
 
         if(mid*(mid+1) <= a && (mid+1)*(mid+2) > a){
             cout << mid;
