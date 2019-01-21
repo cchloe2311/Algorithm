@@ -26,6 +26,7 @@ int main(){
 
     int maxHeight = *max_element(height, height+n);
     int **map = new int*[maxHeight];
+    // TODO ㅇㅣ거 떄문에 메모리 초과나는듯 > 이걸 쓰지 않고 height를 활용하는 방법으로 고치기
     for(int i=0; i<maxHeight; i++){
         map[i] = new int[n];
         memset(map[i], 0, sizeof(int)*n); // 일단 모두 0으로 초기화
