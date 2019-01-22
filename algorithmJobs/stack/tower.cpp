@@ -6,7 +6,7 @@ using namespace std;
 int findReceiver(stack<int> s){
     int sender = s.top();
     s.pop();
-    for(int i=0; i<s.size(); i++){
+    while(!s.empty()){
         if(s.top() >= sender) return s.size();
         else s.pop();
     }
