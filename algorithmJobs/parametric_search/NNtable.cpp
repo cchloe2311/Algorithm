@@ -4,6 +4,9 @@ using namespace std;
 
 pair<long long, long long> countOnTable(int n, int mid){
     long long smaller = 0, equal = 0;
+
+    //TODO mid <= n 인 경우를 for문 안에서도 고려해야함
+
     if(mid <= n) {
         equal++;
         smaller += mid-1;
