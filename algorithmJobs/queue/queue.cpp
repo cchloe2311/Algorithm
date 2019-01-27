@@ -12,6 +12,7 @@ class Queue{
     int rear;
     int front;
     int *queue;
+    int capacity;
 public:
     Queue(int size){
         this->size = size;
@@ -19,28 +20,31 @@ public:
 
         rear = -1;
         front = -1;
+        capacity = 0;
     }
 
     bool push(int n);
     bool pop();
     int getFront();
-    bool isFull();
     bool isEmpty();
 };
 
 bool Queue::push(int n) {
-    if(isFull()) return false;
+    if(rear == size-1) return false;
 
-    rear = (rear+1)%size;
+    rear++;
     queue[rear] = n;
+    capacity++;
     return true;
 }
 
 bool Queue::pop() {
     if(front == rear) return false;
+    if(front == size-1) return false;
 
-    front = (front+1)%size;
+    front++;
     queue[front] = NULL;
+    capacity--;
     return true;
 }
 
@@ -48,13 +52,8 @@ int Queue::getFront() {
     return queue[(front+1)%size];
 }
 
-bool Queue::isFull() {
-    if((rear+1)%size == front) return true;
-    else return false;
-}
-
 bool Queue::isEmpty() {
-    if(rear == front) return true;
+    if(capacity == 0) return true;
     else return false;
 }
 
@@ -79,13 +78,16 @@ int main(){
             case PUSH:{
                 cin >> qInput;
                 if(!q.push(qInput)) result.push_back(OVERFLOW);
+                break;
             }
             case POP:{
                 if(!q.pop())result.push_back(UNDERFLOW);
+                break;
             }
             case FRONT:{
                 if(q.isEmpty()) result.push_back(null);
                 else result.push_back(to_string(q.getFront()));
+                break;
             }
         }
     }
