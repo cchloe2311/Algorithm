@@ -13,7 +13,7 @@ bool isGoodSeq(string seq) {
 	// ~121 => ~1212 // 뒤에서 두개랑 앞에 두개를 비교
 	// ~12312 => ~123123 // 뒤에서 세개랑 앞에 세개를 비교
 
-	for (int i = 1; i < seq.size() / 2; i++) {
+	for (int i = 1; i <= seq.size() / 2; i++) {
 		// substr(position, size)
 		string post = seq.substr(seq.size()-i, i);
 		string pre = seq.substr(seq.size()-2*i, i);
@@ -24,11 +24,11 @@ bool isGoodSeq(string seq) {
 
 bool makeSeq(string seq, int n) {
 	for (int i = 1; i <= DIGITS; i++)
-		if (isGoodSeq(seq + char(49+i))) {
-			if (n != 1)
-				if(makeSeq(seq + char(49 + i), n-1)) return true;
+		if (isGoodSeq(seq + char(48+i))) {
+			if (n != 0)
+				if(makeSeq(seq + char(48 + i), n-1)) return true;
 			else {
-					cout << seq+char(49+i);
+					cout << seq+char(48+i);
 					return true;
 			}
 		}
