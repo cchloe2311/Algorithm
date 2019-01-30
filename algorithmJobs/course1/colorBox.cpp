@@ -10,11 +10,15 @@ int countKindOfColor(vector<int> extra, int n){
     int *colors = new int[n+1];
     memset(colors, 0, sizeof(int)*(n+1));
 
-    for(int i=0; i<extra.size(); i++) colors[extra[i]]++;
-
     int numOfColor = 0;
-    for(int i=1; i<=n; i++)
-        if(colors[i] != 0) numOfColor++;
+
+    for(int i=0; i<extra.size(); i++){
+        if(colors[extra[i]] == 0){
+            colors[extra[i]] = 1;
+            numOfColor++;
+        }
+    }
+
     return numOfColor;
 }
 
