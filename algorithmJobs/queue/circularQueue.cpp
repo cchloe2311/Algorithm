@@ -40,7 +40,7 @@ bool Queue::push(int n) {
 }
 
 bool Queue::pop() {
-    if(front == rear) return false;
+    if(isEmpty()) return false;
 
     front = (front+1)%size;
     queue[front] = NULL;
