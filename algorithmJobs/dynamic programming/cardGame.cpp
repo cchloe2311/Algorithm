@@ -23,6 +23,8 @@ int main(){
     count[1].seq[0] = cards[1];
     count[1].seq[1] = 0;
 
+
+    // 두개를 연달아 갖지 않는 경우도 고래해야하나?
     for(int i=2; i<=n; i++){
         count[i].seq[0] = count[i-2].seq[0] > count[i-2].seq[1] ? count[i-2].seq[0] : count[i-2].seq[1];
         count[i].seq[0] += cards[i];
@@ -31,5 +33,6 @@ int main(){
 
     int max = count[n].seq[0] > count[n].seq[1] ? count[n].seq[0] : count[n].seq[1];
     if(max < count[n-1].seq[1]) max = count[n-1].seq[1];
+
     cout << max;
 }
