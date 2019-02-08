@@ -10,6 +10,17 @@ public:
     }
 };
 
+int getMax(Count* count, int index){
+    int max = 0;
+
+    for(int i=0; i<=index; i++){
+        if(max > count[i].seq[0]) max = count[i].seq[0];
+        if(max > count[i].seq[1]) max = count[i].seq[1];
+    }
+
+    return max;
+}
+
 int main(){
     int n;
     cin >> n;
@@ -25,6 +36,7 @@ int main(){
 
 
     // 두개를 연달아 갖지 않는 경우도 고래해야하나?
+    // ex. 11 5 3 2 7 9
     for(int i=2; i<=n; i++){
         count[i].seq[0] = count[i-2].seq[0] > count[i-2].seq[1] ? count[i-2].seq[0] : count[i-2].seq[1];
         count[i].seq[0] += cards[i];
