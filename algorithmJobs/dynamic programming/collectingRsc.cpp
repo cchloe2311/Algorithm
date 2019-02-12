@@ -12,6 +12,8 @@ int main(){
     for(int i=0; i<n; i++)
         for(int j=0; j<m; j++) cin >> resource[i][j];
 
+    for(int i=1; i<m; i++) resource[0][i] += resource[0][i-1];
+
     for(int i=1; i<n; i++){
         resource[i][0] += resource[i-1][0];
         for(int j=1; j<m; j++){
