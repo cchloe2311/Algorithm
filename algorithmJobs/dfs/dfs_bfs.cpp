@@ -3,13 +3,9 @@
 #include <stack>
 #include <queue>
 #include <string.h>
+#include <algorithm>
 
 using namespace std;
-
-//class Node{
-//public:
-//    vector<int> neighbor;
-//};
 
 int getDest(vector<int> neighbor, int *visited) {
     for (int i = 0; i < neighbor.size(); i++) {
@@ -47,11 +43,34 @@ void getDfs(vector<int> *graph, int n) {
     cout << endl;
 }
 
+void getBfs(vector<int> *graph, int n){
+    queue<int> q;
+    int *visited = new int[n];
+    memset(visited, 0, sizeof(int)*n);
+
+    q.push(0);
+    visited[0] = 1;
+
+    while (!q.empty()) {
+        int front = q.front();
+        q.pop();
+
+        cout << front << " ";
+
+        for (int i = 0; i < graph[front].size(); i++) {
+            if(visited[graph[front][i]]  == 0) {
+                q.push(graph[front][i]);
+                visited[graph[front][i]] = 1;
+            }
+        }
+    }
+
+    cout << endl;
+}
+
 int main(){
     int n, m;
     cin >> n >> m;
-
-    //Node *graph = new Node[n]();
 
     vector<int> *graph = new vector<int>[n];
 
@@ -63,6 +82,8 @@ int main(){
         graph[b].push_back(a);
     }
 
-    getDfs(graph, n);
+    for(int i = 0; i < n; i++) sort(graph[i].begin(), graph[i].end());
 
+    getDfs(graph, n);
+    getBfs(graph, n);
 }
