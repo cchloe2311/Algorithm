@@ -48,6 +48,6 @@ int main() {
         graph[b].push_back(a);
     }
 
-    if (isPossible(graph, n)) cout << "YES";
-    else cout << "NO";
+    if (isPossible(graph, n)) cout << "Yes";
+    else cout << "No";
 }
