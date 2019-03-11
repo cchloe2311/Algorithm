@@ -14,6 +14,7 @@ bool isPossible(vector<int> *graph, int n){
 
     while(!s.empty()) {
         int top = s.top();
+        s.pop();
 
         for (int i = 0; i < graph[top].size(); i++) {
             if (colored[graph[top][i]] == colored[top]) {
@@ -22,11 +23,6 @@ bool isPossible(vector<int> *graph, int n){
             else if (colored[graph[top][i]] == 0) {
                 colored[graph[top][i]] = (colored[top] * -1);
                 s.push(graph[top][i]);
-
-                break;
-            }
-            else if (i == (graph[top].size() - 1)) {
-                s.pop();
             }
         }
     }
