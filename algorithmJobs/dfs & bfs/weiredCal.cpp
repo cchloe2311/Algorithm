@@ -28,7 +28,7 @@ int main() {
         int cal = front.first * 2;
         if (cal == n) {
             cout << (front.second + 1);
-            return 1;
+            return 0;
         }
         else {
             q.push({cal, (front.second + 1)});
@@ -37,11 +37,14 @@ int main() {
         cal = (int)(front.first / 3);
         if (cal == n) {
             cout << (front.second + 1);
-            return 1;
+            return 0;
         }
         else if (!isVisited(visited, cal)) {
             q.push({cal, (front.second + 1)});
         }
     }
+
+    // TODO 다섯자리가 넘어가는 경우에 대해서도 처리해 줘야함 !!
+    // bigger than 9999
 
 }
