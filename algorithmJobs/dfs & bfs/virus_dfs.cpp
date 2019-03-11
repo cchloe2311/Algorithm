@@ -16,17 +16,14 @@ int getVirusComputer(vector<int> *graph, int n) {
 
     while (!s.empty()) {
         int top = s.top();
+        s.pop();
 
         for (int i = 0; i < graph[top].size(); i++) {
-            if (isVirus[graph[top][i]] == 0) {
-                isVirus[graph[top][i]] = 1;
-                s.push(graph[top][i]);
+            int index = graph[top][i];
 
-                break;
-            }
-
-            if (i == (graph[top].size() - 1)) {
-                s.pop();
+            if (isVirus[index] == 0) {
+                isVirus[index] = 1;
+                s.push(index);
             }
         }
     }
@@ -43,7 +40,7 @@ int main(){
     int n, m;
     cin >> n >> m;
 
-    vector<int> *graph = new vector<int>[n+1];
+    vector<int> *graph = new vector<int>[n + 1];
 
     for (int i = 0; i < m; i++) {
         int a, b;
