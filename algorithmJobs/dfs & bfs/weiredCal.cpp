@@ -5,10 +5,12 @@
 #include <algorithm>
 using namespace std;
 
-bool isVisited(vector<int> visited, int value) {
-    if(find(visited.begin(), visited.end(), value) != visited.end()) return true;
-    else return false;
-}
+#define LIMIT 100000
+
+//bool isVisited(vector<int> visited, int value) {
+//    if(find(visited.begin(), visited.end(), value) != visited.end()) return true;
+//    else return false;
+//}
 
 int main() {
     int n;
@@ -16,35 +18,35 @@ int main() {
 
     // {value, depth}
     queue<pair<int, int> > q;
-    vector<int> visited;
+    int *visited = new int[n * 3];
 
     q.push({1, 0});
-    visited.push_back(1);
+    visited[1] = 1;
+
 
     while (!q.empty()) {
         pair<int, int> front = q.front();
         q.pop();
 
-        int cal = front.first * 2;
+        int cal = (front.first * 2);
         if (cal == n) {
             cout << (front.second + 1);
             return 0;
         }
-        else {
+        else if (cal < LIMIT){
             q.push({cal, (front.second + 1)});
         }
 
-        cal = (int)(front.first / 3);
+        cal = (front.first / 3);
         if (cal == n) {
             cout << (front.second + 1);
             return 0;
         }
-        else if (!isVisited(visited, cal)) {
+        else if (visited[cal] == 0) {
             q.push({cal, (front.second + 1)});
         }
     }
 
     // TODO 다섯자리가 넘어가는 경우에 대해서도 처리해 줘야함 !!
     // bigger than 9999
-
 }
