@@ -54,8 +54,10 @@ int main() {
                 postfix += part;
             }
             else if ((!s.empty()) && (priority >= getPriority(s.top()))) {
-                postfix += s.top();
-                s.pop();
+                while ((!s.empty()) && (priority >= getPriority(s.top()))) {
+                    postfix += s.top();
+                    s.pop();
+                }
 
                 s.push(part);
             }
