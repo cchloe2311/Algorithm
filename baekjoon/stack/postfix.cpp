@@ -1,33 +1,35 @@
 #include <iostream>
 #include <string>
 #include <stack>
+#include <utility>
 using namespace std;
+
+#define NUM -1
 
 static string opener = "(";
 static string closer = ")";
 
-bool isOperator(string str) {
-    string operatorArr[4] = {"+", "-", "/", "*"};
+int getPriority(string str) {
+    pair<string, int> operatorArr[5] = {{"+", 2}, {"-", 2}, {"/", 1}, {"*", 1}, {"(", 3}};
 
-    for (int i = 0; i < 4; i++) {
-        if (operatorArr[i] == str) return true;
+    for (int i = 0; i < 5; i++) {
+        if (operatorArr[i].first == str) return operatorArr[i].second;
     }
 
-    return false;
+    return -1;
 }
 
-void getPostfix(stack<string> &s) {
-    string postfix = "";
+string getPostfix(string postfix, stack<string> &s) {
     while ((!s.empty()) && (s.top() != opener)) {
-        string temp = s.top();
+        string top = s.top();
 
-        if (isOperator(temp)) postfix.push_back(temp[0]);
-        else  postfix = (temp + postfix);
-
+        if(s.top() != opener) postfix += top;
         s.pop();
     }
+
     if (!s.empty()) s.pop();
-    s.push(postfix);
+
+    return postfix;
 }
 
 int main() {
@@ -35,18 +37,36 @@ int main() {
     cin >> input;
 
     stack<string> s;
+    string postfix = "";
 
     for (int i = 0; i < input.size(); i++) {
         string part = input.substr(i, 1);
         if (part == closer) {
-            getPostfix(s);
+            postfix = getPostfix(postfix, s);
+        }
+        else if (part == opener) {
+            s.push(part);
         }
         else {
-            s.push(part);
+            int priority = getPriority(part);
+
+            if (priority == NUM) {
+                postfix += part;
+            }
+            else if ((!s.empty()) && (priority >= getPriority(s.top()))) {
+                postfix += s.top();
+                s.pop();
+
+                s.push(part);
+            }
+            else {
+                s.push(part);
+            }
         }
     }
 
-    getPostfix(s);
+    postfix = getPostfix(postfix, s);
 
-    cout << s.top();
+    cout << postfix;
+
 }
