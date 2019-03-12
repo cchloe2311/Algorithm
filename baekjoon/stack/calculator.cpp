@@ -22,12 +22,6 @@ int getPriority(string part) {
     return -1;
 }
 
-//bool isOperator(string part) {
-//    string operatorArr[4] = {"+", "-", "/", "*"};
-//
-//    for
-//}
-
 void getPostfix(vector<string> &postfix, stack<string> &s) {
     while ((!s.empty()) && (s.top() != opener)) {
         string top = s.top();
@@ -46,6 +40,11 @@ vector<string> convertToPostfix(string input) {
 
     for (int i = 0; i < input.size(); i++) {
         string part = input.substr(i, 1);
+
+        while ((i != (input.size() -1)) && (getPriority(part) == -1) && (getPriority(input.substr(i + 1, 1)) == -1)) {
+            part += input[++i];
+        }
+
         if (part == closer) {
              getPostfix(postfix, s);
         }
@@ -85,19 +84,19 @@ int calculatePostfix(vector<string> postfix) {
             int result = 0;
 
             if(*p == "+") {
-                result = atoi(postfix[i - 2].c_str()) + atoi(postfix[i - 2].c_str());
+                result = atoi(postfix[i - 2].c_str()) + atoi(postfix[i - 1].c_str());
             }
             else if(*p == "-") {
-                result = atoi(postfix[i - 2].c_str()) - atoi(postfix[i - 2].c_str());
+                result = atoi(postfix[i - 2].c_str()) - atoi(postfix[i - 1].c_str());
             }
             else if(*p == "*") {
-                result = atoi(postfix[i - 2].c_str()) * atoi(postfix[i - 2].c_str());
+                result = atoi(postfix[i - 2].c_str()) * atoi(postfix[i - 1].c_str());
             }
             else {
-                result = atoi(postfix[i - 2].c_str()) / atoi(postfix[i - 2].c_str());
+                result = atoi(postfix[i - 2].c_str()) / atoi(postfix[i - 1].c_str());
             }
 
-            postfix[i-1] = to_string(result);
+            postfix[i - 1] = to_string(result);
             postfix.erase(postfix.begin() + (i - 2));
             postfix.erase(postfix.begin() + (i - 1));
 
