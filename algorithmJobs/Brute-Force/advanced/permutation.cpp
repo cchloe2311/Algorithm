@@ -6,6 +6,8 @@ using namespace std;
 vector<vector<int>> getPermutation(vector<vector<int>> pre, int n, int r) {
     vector<vector<int>> present;
 
+    if(r == 0) return present;
+
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < pre.size(); j++) {
             if (find(pre[j].begin(), pre[j].end(), i) == pre[j].end()) {
