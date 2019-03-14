@@ -67,13 +67,18 @@ int main() {
                 cout << (p.depth + 1);
                 return 0;
             }
-            else if (!isInRange(n, m, neighborY, neighborX)) continue;
+
+            if (!isInRange(n, m, neighborY, neighborX)) continue;
 
             Position neighborP = Position(neighborY, neighborX,
                                           (p.depth + 1), (p.crushed + map[neighborY][neighborX]));
 
-            if ((visited[neighborY][neighborX] == 0) && (neighborP.crushed < 2)) {
+            if ((visited[neighborY][neighborX] != 1) && (neighborP.crushed == 0)) {
                 visited[neighborY][neighborX] = 1;
+                q.push(neighborP);
+            }
+            else if ((visited[neighborY][neighborX] == 0) && (neighborP.crushed == 1)) {
+                visited[neighborY][neighborX] = 2;
                 q.push(neighborP);
             }
         }
