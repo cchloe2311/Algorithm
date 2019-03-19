@@ -6,7 +6,7 @@ using namespace std;
 
 #define LIMIT 1000001
 
-bool isCameleon(string input, int index) {
+bool isCameleon(string input, int index, vector<int> v) {
     string pre = input.substr(index);
     int length = input.size() - index;
 
@@ -14,8 +14,9 @@ bool isCameleon(string input, int index) {
         return false;
     }
 
-    for (int i = 1; i < index; i++) {
-        if (input.substr(i, length) == pre) return true;
+    for (int i = 0; i < v.size(); i++) {
+        if (v[i] == index) break;
+        if (input.substr(v[i], length) == pre) return true;
     }
 
     return false;
@@ -34,7 +35,7 @@ int main() {
     }
 
     for (int i = 0; i < matchIndex.size(); i++) {
-        if (isCameleon(input, matchIndex[i])) {
+        if (isCameleon(input, matchIndex[i], matchIndex)) {
             printf("%s", input.substr(matchIndex[i]).c_str());
 //            cout << input.substr(matchIndex[i]);
             return 0;
