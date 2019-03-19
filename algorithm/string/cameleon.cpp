@@ -4,6 +4,8 @@
 #include <algorithm>
 using namespace std;
 
+#define LIMIT 1000001
+
 bool isCameleon(string input, int index) {
     string pre = input.substr(index);
     int length = input.size() - index;
@@ -20,8 +22,10 @@ bool isCameleon(string input, int index) {
 }
 
 int main() {
-    string input;
-    cin >> input;
+    char inputArr[LIMIT];
+    scanf("%s", inputArr);
+
+    string input(inputArr);
 
     vector<int> matchIndex;
 
@@ -31,10 +35,11 @@ int main() {
 
     for (int i = 0; i < matchIndex.size(); i++) {
         if (isCameleon(input, matchIndex[i])) {
-            cout << input.substr(matchIndex[i]);
+            printf("%s", input.substr(matchIndex[i]).c_str());
+//            cout << input.substr(matchIndex[i]);
             return 0;
         }
     }
 
-    cout << -1;
+    printf("-1");
 }
