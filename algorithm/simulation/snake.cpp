@@ -17,8 +17,9 @@ struct Redirection {
     int direction;
 };
 
-bool isGameEnded(int n, Point cur) {
-//    if ((cur ))
+bool isGameEnded(int n, int y, int x) {
+    if ((0 <= y) && (n > y) && (0 <= x) && (n > x)) return false;
+    return true;
 }
 
 int main() {
@@ -27,8 +28,6 @@ int main() {
 
     Point toward[4] = {Point(0, +1), Point(-1, 0),
                           Point(0, -1), Point(+1, 0)};
-
-    int direction = 0;
 
     Point *appleP = new Point[k];
     for (int i = 0; i < k; i++) {
@@ -41,9 +40,23 @@ int main() {
         cin >> redirection[i].sec >> redirection[i].direction;
     }
 
-    int time = 0;
+    int time = 0, direction = 0, redirectionIdx = 0;
+    Point curP = Point(0, 0);
 
     while(true) {
+        time++;
 
+        // TODO what if it exceeds the numOfitem?
+        if (time == redirection[redirectionIdx].sec) {
+            direction = (direction + redirection[redirectionIdx].direction) % 4;
+            redirectionIdx++;
+        }
+
+        curP.y += toward[direction].y;
+        curP.x += toward[direction].x;
+
+        if (isGameEnded(n, curP.y, curP.x)) break;
     }
+
+    cout << time;
 }
