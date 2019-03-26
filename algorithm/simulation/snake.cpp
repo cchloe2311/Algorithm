@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <string.h>
+#include <queue>
 using namespace std;
 
 struct Point {
@@ -24,9 +26,11 @@ struct Redirection {
     int direction;
 };
 
-bool isGameEnded(int n, int y, int x) {
-    if ((0 < y) && (n >= y) && (0 < x) && (n >= x)) return false;
-    return true;
+bool isGameEnded(int n, int y, int x, vector<Point> v) {
+    if (find(v.begin(), v.end(), Point(y, x)) != v.end()) return true;
+
+    else if ((0 < y) && (n >= y) && (0 < x) && (n >= x)) return false;
+    else return true;
 }
 
 int main() {
@@ -56,31 +60,34 @@ int main() {
     }
 
     int time = 0, direction = 0, redirectionIdx = 0;
-    Point curP = Point(1, 1);
 
-    // TODO 뱀이 자신의 몸에 부딫힌 경우!
-    // TODO 문제 이해 // 첫번째 예제의 답이 9인 이유를 모르겠음ㅜ
+    vector<Point> v;
+    v.push_back(Point(1, 1));
 
     while(true) {
         time++;
 
-        curP.y += toward[direction].y;
-        curP.x += toward[direction].x;
+        int tempY = v.back().y + toward[direction].y;
+        int tempX = v.back().x + toward[direction].x;
 
         if ((redirectionIdx < l) && (time == redirection[redirectionIdx].sec)) {
-            direction = (direction + redirection[redirectionIdx].direction) % 4;
+            direction = (direction + 4 + redirection[redirectionIdx].direction) % 4;
             redirectionIdx++;
         }
 
-        auto it = find(appleP.begin(), appleP.end(), Point(curP.y, curP.x));
-        if (it != appleP.end()) {
-            curP.y += toward[direction].y;
-            curP.x += toward[direction].x;
+        if (isGameEnded(n, tempY, tempX, v)) break;
 
+        auto it = find(appleP.begin(), appleP.end(), Point(tempY, tempX));
+        if (it != appleP.end()) {
             appleP.erase(it);
         }
+        else {
+            v.erase(v.begin());
+        }
 
-        if (isGameEnded(n, curP.y, curP.x)) break;
+//        if (isGameEnded(n, tempY, tempX, v)) break;
+
+        v.push_back(Point(tempY, tempX));
     }
 
     cout << time;
