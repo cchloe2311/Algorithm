@@ -7,35 +7,41 @@
 
 using namespace std;
 
-vector<pair<int, int>> getDfsNum(vector<int> *graph, int n) {
+vector<int> getDfsNum(vector<int> *graph, int n) {
+    vector<int> numV;
+
     stack<int> s;
     int *visited = new int[n + 1];
     memset(visited, 0, sizeof(int) * (n + 1));
 
-    s.push(1);
-    visited[1] = 1;
-
-    int time = 1;
-    vector<pair<int, int>> numV; // first : 순서, second : index
-    while (!s.empty()) {
-        int top = s.top();
-        bool isDone = true;
-
-        for (int i = 0; i < graph[top].size(); i++) {
-            if (visited[graph[top][i]] == 0) {
-                s.push(graph[top][i]);
-                visited[graph[top][i]] = 1;
-                isDone = false;
-
-                break;
+    for (int i = 1; i <= n; i++) {
+            if (visited[i] == 0) {
+                s.push(i);
+                visited[i] = 1;
             }
-        }
 
-        if (isDone) {
-            s.pop();
-            numV.push_back({time++, top});
-        }
+            while (!s.empty()) {
+                int top = s.top();
+                bool isDone = true;
+
+                for (int j = 0; j < graph[top].size(); j++) {
+                    if (visited[graph[top][j]] == 0) {
+                        s.push(graph[top][j]);
+                        visited[graph[top][j]] = 1;
+                        isDone = false;
+
+                        break;
+                    }
+                }
+
+                if (isDone) {
+                    s.pop();
+                    numV.push_back(top);
+                }
+            }
     }
+
+
 
     return numV;
 }
@@ -52,7 +58,6 @@ void findGroup(vector<int> &grouped, vector<int> *reversedGraph, int n, int star
         int top = s.top();
         s.pop();
         grouped.push_back(top);
-
 
         for (int i = 0; i < reversedGraph[top].size(); i++) {
             if ((visited[reversedGraph[top][i]] == 0)
@@ -78,15 +83,20 @@ int main() {
         reversedGraph[dest].push_back(src);
     }
 
-    vector<pair<int, int>> numV = getDfsNum(graph, n);
+    for (int i = 1; i <= n; i++) {
+        sort(graph[i].begin(), graph[i].end());
+        sort(reversedGraph[i].begin(), reversedGraph[i].end());
+    }
+
+    vector<int> numV = getDfsNum(graph, n);
 
     vector<int> grouped;
     int group = 0;
     for (int i = (numV.size() - 1); i >=0; i--) {
-        auto it = find(grouped.begin(), grouped.end(), numV[i].second);
+        auto it = find(grouped.begin(), grouped.end(), numV[i]);
 
         if (it == grouped.end()) {
-            findGroup(grouped, reversedGraph, n, numV[i].second);
+            findGroup(grouped, reversedGraph, n, numV[i]);
             group++;
         }
     }
