@@ -58,10 +58,7 @@ int getMinDist() {
             vector<int> temp(front);
             temp.push_back(i);
 
-            if (temp.size() < m) {
-                q.push(temp);
-            }
-            else if (temp.size() == m) {
+            if (temp.size() <= m) {
                 memset(check, false, sizeof(bool) * 14);
                 for (int j = 0; j < temp.size(); j++) {
                     check[temp[j]] = true;
@@ -69,6 +66,8 @@ int getMinDist() {
 
                 int tempDist = getSumOfDist();
                 if (tempDist < minDist) minDist = tempDist;
+
+                q.push(temp);
             }
         }
     }
@@ -99,7 +98,7 @@ int main() {
     }
 
     if (m >= chickenV.size()) {
-        memset(check, true, sizeof(bool) * homeV.size());
+        memset(check, true, sizeof(bool) * 14);
 
         cout << getSumOfDist();
     }
