@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include <vector>
+#include <queue>
 using namespace std;
 
 int n, m, h;
@@ -61,13 +62,15 @@ bool isPossibleIdx(int y, int x) {
     return true;
 }
 
-int getMin(int flag, vector<vector<int>> preCases) {
+int getMin(queue<vector<int>> preCases) {
     int size = v.size();
-    vector<vector<int>> curCases;
 
-    for (int i = 0; i < preCases.size(); i++) {
-        for (int j = 0; j < preCases[i].size(); j++) {
-            map[v[preCases[i][j]].y][v[preCases[i][j]].x] = true;
+    while (!preCases.empty()) {
+        vector<int> front = preCases.front();
+        preCases.pop();
+
+        for (int j = 0; j < front.size(); j++) {
+            map[v[front[j]].y][v[front[j]].x] = true;
         }
 
         for (int j = 0; j < size; j++) {
@@ -78,26 +81,28 @@ int getMin(int flag, vector<vector<int>> preCases) {
                 map[y][x] = true;
 
                 if (getOutput()) {
-                    return flag;
+                    return (front.size() + 1);
                 }
                 else {
                     map[y][x] = false; // 되돌리기
 
-                    vector<int> newCase(preCases[i]);
+                    vector<int> newCase(front);
                     newCase.push_back(j);
 
-                    curCases.push_back(newCase);
+                    if (newCase.size() > 3) {
+                        return -1;
+                    }
+                    else preCases.push(newCase);
                 }
             }
         }
 
-        for (int j = 0; j < preCases[i].size(); j++) {
-            map[v[preCases[i][j]].y][v[preCases[i][j]].x] = false;
+        for (int j = 0; j < front.size(); j++) {
+            map[v[front[j]].y][v[front[j]].x] = false;
         }
     }
 
-    if (flag == 3) return -1;
-    else return getMin(++flag, curCases);
+    return -1;
 }
 
 int main() {
@@ -120,9 +125,9 @@ int main() {
         cout << 0;
     }
     else {
-        vector<vector<int>> initCases;
-        initCases.push_back({});
+        queue<vector<int>> initCases;
+        initCases.push({});
 
-        cout << getMin(1, initCases);
+        cout << getMin(initCases);
     }
 }
