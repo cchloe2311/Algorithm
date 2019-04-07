@@ -73,7 +73,11 @@ int getMin(queue<vector<int>> preCases) {
             map[v[front[j]].y][v[front[j]].x] = true;
         }
 
-        for (int j = 0; j < size; j++) {
+        int init;
+        if (front.empty()) init = 0;
+        else init = front.back() + 1;
+
+        for (int j = init; j < size; j++) {
             int y = v[j].y;
             int x = v[j].x;
 
@@ -121,9 +125,7 @@ int main() {
         }
     }
 
-    if (getOutput()) {
-        cout << 0;
-    }
+    if (getOutput()) cout << 0;
     else {
         queue<vector<int>> initCases;
         initCases.push({});
