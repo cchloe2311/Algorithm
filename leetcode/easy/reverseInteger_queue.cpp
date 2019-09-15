@@ -11,6 +11,11 @@ public:
         queue<int> q;
         int power = 0;
 
+        if (x == INT_MIN) return 0;
+
+        int isNegative = x == 0 ? 0 : x / abs(x);
+        x *= isNegative;
+
         while(true) {
             q.push((x % (int)pow(10, power + 1)) / pow(10, power));
 
@@ -22,16 +27,15 @@ public:
 
         while (power >= 0) {
             int part = (q.front() * pow(10, power));
-            if (((result > 0) && (result + part > INT_MAX))
-            || ((result < 0) && (result + part < INT_MIN))) return 0;
+            if ((part < 0) || (result > INT_MAX - part)) return 0;
             else result += part;
 
             q.pop();
             power--;
         }
 
+        result *= isNegative;
         return result;
-        // (result < INT_MIN || result > INT_MAX) ? 0 : result;
     }
 };
 
@@ -40,3 +44,4 @@ int main() {
 
     cout << solution.reverse(1534236469);
 }
+// https://leetcode.com/problems/reverse-integer/discuss/4544/Understandable-c%2B%2B-solution-handles-overflow
