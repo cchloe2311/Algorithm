@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -11,11 +12,11 @@ struct ListNode {
 class Solution {
 public:
     ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
-        ListNode *head = (ListNode *) malloc(sizeof(ListNode));
+        ListNode *head = new ListNode(-1);
         head->next = NULL;
         int sum = 0;
 
-        while ((l1 != NULL) || (l2 != NULL)) {
+        while ((l1 != NULL) || (l2 != NULL) || (sum != 0)) {
             if (l1 != NULL) {
                 sum += l1->val;
                 l1 = l1->next;
@@ -25,13 +26,12 @@ public:
                 l2 = l2->next;
             }
 
-            ListNode *temp = (ListNode *) malloc(sizeof(ListNode));
-            temp->next = NULL;
-
             int op = sum / 10;
-            temp->val = sum - (op * 10);
+            int value = sum - (op * 10);
             sum = op;
 
+            ListNode *temp = new ListNode(value);
+            temp->next = NULL;
 
             ListNode *tempHead = head;
             while (tempHead->next != NULL) tempHead = tempHead->next;
@@ -59,7 +59,7 @@ int main() {
     ListNode *l21 = (ListNode *) malloc(sizeof(ListNode));
     l21->val = 6;
     ListNode *l22 = (ListNode *) malloc(sizeof(ListNode));
-    l22->val = 4;
+    l22->val = 6;
     l22->next = NULL;
 
     l2->next = l21;
