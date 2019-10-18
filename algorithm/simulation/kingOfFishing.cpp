@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #define MAP_MAX 101
 using namespace std;
@@ -87,17 +88,28 @@ void moveSharks() {
             int tempY = i, tempX = j;
             if (time == -1) time = map[i][j].front().time;
 
-            for (int s = 0; s < map[i][j].front().s; s++) {
-                tempY += dy[map[i][j].front().d];
-                tempX += dx[map[i][j].front().d];
-
-                if (!isInRange(tempY, tempX)) {
-                    tempY -= dy[map[i][j].front().d];
-                    tempX -= dx[map[i][j].front().d];
-
-                    map[i][j].front().d = redirection[map[i][j].front().d];
-                    s--;
+            int leftMove = map[i][j].front().s;
+            while(leftMove != 0) {
+                int move;
+                if (map[i][j].front().d == 1) {
+                    move = min(leftMove, tempY - 1);
+                    tempY -= move;
                 }
+                else if (map[i][j].front().d == 2) {
+                    move = min(leftMove, r - tempY);
+                    tempY += move;
+                }
+                else if (map[i][j].front().d == 3) {
+                    move = min(leftMove, c - tempX);
+                    tempX += move;
+                }
+                else if (map[i][j].front().d == 4) {
+                    move = min(leftMove, tempX - 1);
+                    tempX -= move;
+                }
+
+                if (move != leftMove) map[i][j].front().d = redirection[map[i][j].front().d];
+                leftMove -= move;
             }
 
             map[i][j].front().time++;
